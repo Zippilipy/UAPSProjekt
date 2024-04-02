@@ -14,7 +14,7 @@ def matrixmultiply(matrix, vector):
 def main():
     amount = int(sys.argv[1])
     dimensions = 12288 # chatgpt har 12288 dimensioner
-    amountTokens = 50000 # chatgpt har 50000 så kallade tokens, kan tänka sig att det är som ord i chatgpts lexikon
+    amountTokens = 50257 # chatgpt har 50257 så kallade tokens, kan tänka sig att det är som ord i chatgpts lexikon
     for i in range(amount):
         matrix = np.random.uniform(low=-10.0, high=10.0, size=(amountTokens, dimensions))
         matrix = np.round(matrix, 1)
