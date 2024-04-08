@@ -29,6 +29,6 @@ plotfunction <- function(language) {
 	return(result)
 }
 
-#ctime <- plotfunction("c")
+ctime <- plotfunction("c")
 #pythontime <- plotfunction("python")
 numpytime <- plotfunction("numpy")
