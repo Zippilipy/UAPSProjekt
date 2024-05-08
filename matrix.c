@@ -3,9 +3,9 @@
 #include <time.h>
 #include <math.h>
 
-#define R1 50257 //50257 
-#define C1 12288 //12288
-#define R2 12288 //12288
+#define R1 1000 //50257 
+#define C1 500 //12288
+#define R2 500 //12288
 #define C2 1 //1
 
 float random_number() {

@@ -1,7 +1,7 @@
 library(glue)
 
-amountCode <- 10
-amountRuns <- 2
+amountCode <- 100
+amountRuns <- 100
 pdf("simulations.pdf", width = 20, height = 11)
 par(mfrow = c(1, 3))
 plotfunction <- function(language) {

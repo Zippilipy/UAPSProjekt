@@ -3,9 +3,9 @@ import math
 import time
 import sys
 
-R1 = 50257 #50257
-C1 = 12288 #12288
-R2 = 12288 #12288
+R1 = 1000  #50257
+C1 = 500 #12288
+R2 = 500 #12288
 C2 = 1 #1
 
 def random_number():

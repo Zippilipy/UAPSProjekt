@@ -1,7 +1,8 @@
 library(glue)
 
-amountCode <- 3
-amountRuns <- 2
+amountCode <- 100
+amountRuns <- 100
+pdf("matrix.pdf", width = 20, height = 11)
 
 par(mfrow = c(1, 3))
 plotfunction <- function(language) {
@@ -32,3 +33,6 @@ plotfunction <- function(language) {
 ctime <- plotfunction("c")
 pythontime <- plotfunction("python")
 numpytime <- plotfunction("numpy")
+write.table(ctime, file = "cmatrix.txt", col.names = FALSE)
+write.table(pythontime, file = "pythonmatrix.txt", col.names = FALSE)
+write.table(numpytime, file = "numpymatrix.txt", col.names = FALSE)
