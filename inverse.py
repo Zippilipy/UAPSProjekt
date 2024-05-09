@@ -2,19 +2,21 @@
 import time
 import numpy as np
 
-DIMENSION = 20
+DIMENSION = 6
+MIN = -10 
+MAX = 10
 
 start_time = time.time()
 
 # Calculates and prints an array
-A = np.array([np.random.rand(DIMENSION,DIMENSION)])
-print(A)
 
 # Finds the inverse of a matrix
 determinant = 0
 
 # ensures that the matrix is inversible
-while determinant == 0:
+while determinant < 0.001:
+	A = np.array([np.random.randint(MIN,MAX, size=(DIMENSION,DIMENSION))])
+	print(A)
 	matrix = np.linalg.inv(A)
 	determinant = np.linalg.det(matrix)
 	if determinant != 0:
