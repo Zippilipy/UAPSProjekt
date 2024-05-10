@@ -16,24 +16,41 @@ def create_matrix(dimension):
         rows += 1
     return matrix
 
-def invert_matrix(A):
+def invert_matrix(a):
     '''Take in a matrix A, returns the inverse'''    
-    n = len(A)
-    I = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+    n = len(a)
+    identity = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
 
     for i in range(n):
-        pivot = A[i][i]
+        pivot = a[i][i]
 	#divides everything in the row
         for j in range(n):
-            A[i][j] /= pivot
-            I[i][j] /= pivot
+            a[i][j] /= pivot
+            identity[i][j] /= pivot
         for k in range(n):
             if k != i:
-                factor = A[k][i]
+                factor = a[k][i]
                 for j in range(n):
-                    A[k][j] -= factor * A[i][j]
-                    I[k][j] -= factor * I[i][j]
-    return I
+                    a[k][j] -= factor * a[i][j]
+                    identity[k][j] -= factor * identity[i][j]
+    return identity
+
+def determinant(matrix):
+	# gets the dimensions of the array
+    rows = len(matrix)
+    cols = len(matrix[0])
+    det = 0
+
+	# 1 x 1 matrix
+    if rows == 1 and cols == 1:
+        return matrix[0][0]
+
+	# 2 x 2 matrix
+    if rows == 2 and cols == 2:
+        return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1]
+    # Return decomposition of a matrix
+    return det
+
 
 start_time = time.time()
 invert_matrix(create_matrix(100))
