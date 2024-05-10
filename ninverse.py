@@ -35,6 +35,16 @@ def invert_matrix(a):
                     identity[k][j] -= factor * identity[i][j]
     return identity
 
+def submatrix(matrix, row, columns):
+    # creates a deepcopy of the matrix
+    copy = matrix[:]
+    # removes all values in a column
+    for i in range(len(matrix)):
+        copy[i].pop(columns)
+    # removes an entire row
+    copy.pop(row)
+    return copy
+
 def determinant(matrix):
 	# gets the dimensions of the array
     rows = len(matrix)
@@ -48,7 +58,7 @@ def determinant(matrix):
 	# 2 x 2 matrix
     if rows == 2 and cols == 2:
         return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1]
-    # Return decomposition of a matrix
+    # Does a laplace expqansion, recursive
     return det
 
 
