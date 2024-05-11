@@ -1,26 +1,22 @@
-# Uses numpy
+""" Implements the algorithm in the most effective way """
 import time
 import numpy as np
 
-DIMENSION = 6
-MIN = -10 
-MAX = 10
+DIMENSION = 100 
+MIN = 0
+MAX = 100
 
 start_time = time.time()
 
-# Calculates and prints an array
+DETERMINANT = 0
 
-# Finds the inverse of a matrix
-determinant = 0
-
-# ensures that the matrix is inversible
-while determinant < 0.001:
-	A = np.array([np.random.randint(MIN,MAX, size=(DIMENSION,DIMENSION))])
-	print(A)
-	matrix = np.linalg.inv(A)
-	determinant = np.linalg.det(matrix)
-	if determinant != 0:
-		print("determinant is ", determinant)
+while abs(DETERMINANT) < 1:
+    A = np.array([np.random.randint(MIN,MAX, size=(DIMENSION,DIMENSION))])
+    DETERMINANT = np.linalg.det(A)
+    print(A)
+    matrix = np.linalg.inv(A)
+    if DETERMINANT != 0:
+        print("determinant is ", DETERMINANT)
 
 
 end_time = time.time()
