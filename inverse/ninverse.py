@@ -40,7 +40,7 @@ def submatrix(matrix, row, columns):
     copy = matrix[:]
     # removes all values in a column
     for i in range(len(matrix)):
-        if len(copy[i]) > i:
+        if len(copy[i])-1 > i:
             copy[i].pop(columns)
     # removes an entire row
     copy.pop(row)
