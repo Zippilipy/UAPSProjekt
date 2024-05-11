@@ -58,9 +58,13 @@ def determinant(matrix):
 	# 2 x 2 matrix
     if rows == 2 and cols == 2:
         return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1]
-    # Does a laplace expqansion, recursive
-    return det
+    # Does a laplace expansion, recursive
 
+    for column in range(cols):
+        sub_matrix = submatrix(matrix, 0, cols)
+        sign = (-1) ** column
+        det = det + sign * matrix[0][column] * determinant(sub_matrix)
+    return det
 
 start_time = time.time()
 invert_matrix(create_matrix(100))
