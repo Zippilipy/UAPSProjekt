@@ -2,7 +2,7 @@
 import time
 import numpy as np
 
-DIMENSION = 100 
+DIMENSION = 500 
 MIN = 0
 MAX = 100
 
@@ -10,11 +10,11 @@ start_time = time.time()
 
 DETERMINANT = 0
 
-while abs(DETERMINANT) < 1:
-    A = np.array([np.random.randint(MIN,MAX, size=(DIMENSION,DIMENSION))])
-    DETERMINANT = np.linalg.det(A)
-    print(A)
-    matrix = np.linalg.inv(A)
+while DETERMINANT != 0:
+    matrix = np.array([np.random.randint(MIN,MAX, size=(DIMENSION,DIMENSION))])
+    DETERMINANT = np.linalg.det(matrix)
+    print(matrix)
+    inverse = np.linalg.inv(matrix)
     if DETERMINANT != 0:
         print("determinant is ", DETERMINANT)
 
