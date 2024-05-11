@@ -40,7 +40,8 @@ def submatrix(matrix, row, columns):
     copy = matrix[:]
     # removes all values in a column
     for i in range(len(matrix)):
-        copy[i].pop(columns)
+        if len(copy[i]) > i:
+            copy[i].pop(columns)
     # removes an entire row
     copy.pop(row)
     return copy
@@ -67,7 +68,14 @@ def determinant(matrix):
     return det
 
 start_time = time.time()
-invert_matrix(create_matrix(100))
+
+Determinant = 0
+
+while Determinant < 0.001:
+    new_matrix = create_matrix(100)
+    invert_matrix(create_matrix(100))
+    Determinant = determinant(new_matrix)
+
 end_time = time.time()
 elapsed_time = end_time - start_time
-print(elapsed_time)
+print(elaps    ed_time)
