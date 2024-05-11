@@ -71,11 +71,12 @@ start_time = time.time()
 
 Determinant = 0
 
-while Determinant < 0.001:
+while Determinant == 1:
     new_matrix = create_matrix(100)
-    invert_matrix(create_matrix(100))
     Determinant = determinant(new_matrix)
 
+	
+invert_matrix(create_matrix(100))
 end_time = time.time()
 elapsed_time = end_time - start_time
-print(elaps    ed_time)
+print(elapsed_time)
