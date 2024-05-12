@@ -1,5 +1,5 @@
-source("mainsieve.r")
+source("sieve/mainsieve.r")
 
-source("mainsimulations.r")
+source("simulations/mainsimulations.r")
 
-source("mainmatrix.r")
+source("matrix/mainmatrix.r")

@@ -10,13 +10,13 @@ plotfunction <- function(language) {
 	for (x in 1:amountRuns) {
 		output <- c()
 		if (language == "c") {
-			output <- system(glue::glue("./matrix.out {amountCode}"), intern = TRUE)
+			output <- system(glue::glue("./matrix/matrix.out {amountCode}"), intern = TRUE)
 		}
 		else if (language == "python") {
-			output <- system(glue::glue("python matrix.py {amountCode}"), intern = TRUE)
+			output <- system(glue::glue("python matrix/matrix.py {amountCode}"), intern = TRUE)
 		}
 		else if (language == "numpy") {
-			output <- system(glue::glue("python matrixnumpy.py {amountCode}"), intern = TRUE)
+			output <- system(glue::glue("python matrix/matrixnumpy.py {amountCode}"), intern = TRUE)
 		}
 		output <- as.numeric(output)
 		output_list[[x]] <- output
