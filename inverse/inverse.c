@@ -5,54 +5,34 @@
 # define N 5
 
 
-// Function to find the cofactor of a given matrix
-void get_cofactor(double matrix[N][N], double temp[N][N], int p, int q, int n) {
-    int i = 0, j = 0;
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < n; col++) {
-            if (row != p && col != q) {
-                temp[i][j++] = matrix[row][col];
-                if (j == n - 1) {
-                    j = 0;
-                    i++;
-                }
+float determinant(float matrix[N][N]) {
+    int i, j, k;
+    float det = 1;
+    
+    for (i = 0; i < N; i++) {
+        for (j = i + 1; j < N; j++) {
+            float factor = matrix[j][i] / matrix[i][i];
+            for (k = i; k < N; k++) {
+                matrix[j][k] -= factor * matrix[i][k];
             }
         }
     }
+    
+    for (i = 0; i < N; i++) {
+        det *= matrix[i][i];
+    }
+    
+    return det;
 }
-
-// Calculates the determinant of a matrix
-int det(double matrix[N][N], int n){
-	int determinant = 0;
-	if(n == 1){
-		return matrix[0][0];
-	}else if(n == 2){
-		return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-	}
-
-	double temp[N][N];
-	int sign = 1;
-
-	for(int i = 0; i < n; i++){
-		get_cofactor(matrix, temp, 0, i, n);
-		determinant += sign * matrix[0][i] * det(temp, n - 1);
-
-        // terms are to be added with alternate sign
-        sign = -sign;
-	}
-
-
-	return determinant; 
-}	
 
 
 int main() {
         clock_t start, end;
         double cpu_time_used;
-		int determinant = 0, row, column;
+		int det = 0, row, column;
         start = clock(); 
         int DIMENSION = 100;
-        double matrix[DIMENSION][DIMENSION];
+        float matrix[DIMENSION][DIMENSION];
 
 
 		// Creates an identity matrix
@@ -68,7 +48,7 @@ int main() {
         }
 
 
-		while(determinant == 0){
+		while(det == 0){
 			// Creates the new matrix
         	int row, column;
         	srand(time(NULL));
@@ -79,7 +59,7 @@ int main() {
         	}
 
 			// calculates the determinant
-			determinant = det(matrix, N); 
+			det = determinant(matrix); 
 
 		}
 
@@ -106,3 +86,4 @@ int main() {
 		printf("%f", cpu_time_used);
 		return 0;
 }
+
