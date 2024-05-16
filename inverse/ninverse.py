@@ -31,52 +31,40 @@ def invert_matrix(a):
             if k != i:
                 factor = a[k][i]
                 for j in range(n):
-                    a[k][j] -= factor * a[i][j]
-                    identity[k][j] -= factor * identity[i][j]
+                    a[k][j] = a[k][j] -  factor * a[i][j]
+                    identity[k][j] = identity[k][j] - factor * identity[i][j]
     return identity
 
-def submatrix(matrix, row, columns):
-    # creates a deepcopy of the matrix
-    copy = matrix[:]
-    # removes all values in a column
-    for i in range(len(matrix)):
-        if len(copy[i])-1 > i:
-            copy[i].pop(columns)
-    # removes an entire row
-    copy.pop(row)
-    return copy
 
 def determinant(matrix):
-	# gets the dimensions of the array
-    rows = len(matrix)
-    cols = len(matrix[0])
-    det = 0
+    ''' Calculates the detrminant of a matrix'''
+    det = 1
+    n = len(matrix[0])
+    for i in range(n):
+        j = i + 1
+        while j < n:
+            k = i
+            factor = matrix[j][i] / matrix[i][i]
+            while k < n:
+                matrix[j][k] = matrix[j][k] - factor * matrix[i][k]
+                k = k + 1
+            j = j + 1
+    i = 0
 
-	# 1 x 1 matrix
-    if rows == 1 and cols == 1:
-        return matrix[0][0]
+    while i < n:
+        det = det * matrix[i][i]
+        i = i + 1
+    return i
 
-	# 2 x 2 matrix
-    if rows == 2 and cols == 2:
-        return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1]
-    # Does a laplace expansion, recursive
+start_time = time.time_ns()
 
-    for column in range(cols):
-        sub_matrix = submatrix(matrix, 0, cols)
-        sign = (-1) ** column
-        det = det + sign * matrix[0][column] * determinant(sub_matrix)
-    return det
+DETERMINANT = 0
 
-start_time = time.time()
-
-Determinant = 0
-
-while Determinant == 1:
+while DETERMINANT == 0:
     new_matrix = create_matrix(100)
-    Determinant = determinant(new_matrix)
+    DETERMINANT = determinant(new_matrix)
 
-	
 invert_matrix(create_matrix(100))
-end_time = time.time()
+end_time = time.time_ns()
 elapsed_time = end_time - start_time
 print(elapsed_time)
