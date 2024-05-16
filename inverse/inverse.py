@@ -1,25 +1,21 @@
-""" Implements the algorithm in the most effective way """
+""" Finds an invertible matrix, then inverts it"""
 import time
 import numpy as np
 
-DIMENSION = 500 
+DIMENSION = 100
 MIN = 0
 MAX = 100
 
-start_time = time.time()
+start_time = time.time_ns()
 
 DETERMINANT = 0
 
-while DETERMINANT != 0:
+while DETERMINANT == 0:
     matrix = np.array([np.random.randint(MIN,MAX, size=(DIMENSION,DIMENSION))])
     DETERMINANT = np.linalg.det(matrix)
-    print(matrix)
     inverse = np.linalg.inv(matrix)
-    if DETERMINANT != 0:
-        print("determinant is ", DETERMINANT)
 
-
-end_time = time.time()
+end_time = time.time_ns()
 elapsed_time = end_time - start_time
 
 # Prints end time
