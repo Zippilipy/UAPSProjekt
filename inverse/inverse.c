@@ -26,7 +26,10 @@ float determinant(float matrix[N][N]) {
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
+		int times = atoi(argv[1]);
+		int z;
+		for(z = 0; z < times; z++){
 		int det = 0, row, column;
         float matrix[N][N];
         int identity[N][N];
@@ -78,5 +81,6 @@ int main() {
     	clock_gettime(CLOCK_MONOTONIC_RAW, &t_two);
         long elapsed_ns = (t_two.tv_sec - t_one.tv_sec) * 1000000000L + (t_two.tv_nsec - t_one.tv_nsec);
         printf("%ld\n", elapsed_ns);
+		}
 		return 0;
 }
