@@ -1,8 +1,9 @@
 '''Calculates the inverse of an arbitrary matrix, without using numpy'''
+import sys
 import random
 import time
 MAX = 100
-MIN = 0
+MIN = 1
 
 def create_matrix(dimension):
     '''Generates a random square matrix with certain dimensions'''
@@ -56,15 +57,19 @@ def determinant(matrix):
         i = i + 1
     return i
 
-start_time = time.time_ns()
+times = int(sys.argv[1])
+B = 0
+while B < times:
+    start_time = time.time_ns()
 
-DETERMINANT = 0
+    DETERMINANT = 0
 
-while DETERMINANT == 0:
-    new_matrix = create_matrix(100)
-    DETERMINANT = determinant(new_matrix)
+    while DETERMINANT == 0:
+        new_matrix = create_matrix(100)
+        DETERMINANT = determinant(new_matrix)
 
-invert_matrix(create_matrix(100))
-end_time = time.time_ns()
-elapsed_time = end_time - start_time
-print(elapsed_time)
+    invert_matrix(create_matrix(100))
+    end_time = time.time_ns()
+    elapsed_time = end_time - start_time
+    print(elapsed_time)
+    B = B + 1
