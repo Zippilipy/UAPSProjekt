@@ -18,8 +18,8 @@ float determinant(float matrix[N][N]) {
         }
     }
 
-	    for (i = 0; i < N; i++) {
-        // Pivoting: Swap rows if the diagonal element is zero
+for (i = 0; i < N; i++) {
+	 // Pivoting: Swap rows if the diagonal element is zero
         if (matrix[i][i] == 0) {
             for (j = i + 1; j < N; j++) {
                 if (matrix[j][i] != 0) {
@@ -32,7 +32,7 @@ float determinant(float matrix[N][N]) {
                 }
             }
         }
-	}
+}
 
 	
     
