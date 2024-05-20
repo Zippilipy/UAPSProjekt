@@ -17,8 +17,29 @@ float determinant(float matrix[N][N]) {
             }
         }
     }
+
+	    for (i = 0; i < N; i++) {
+        // Pivoting: Swap rows if the diagonal element is zero
+        if (matrix[i][i] == 0) {
+            for (j = i + 1; j < N; j++) {
+                if (matrix[j][i] != 0) {
+                    for (k = 0; k < N; k++) {
+                        float temp = matrix[i][k];
+                        matrix[i][k] = matrix[j][k];
+                        matrix[j][k] = temp;
+                    }
+                    break;
+                }
+            }
+        }
+	}
+
+	
     
     for (i = 0; i < N; i++) {
+		if (matrix[i][i] == 0) {
+            return 0;
+        }
         det *= matrix[i][i];
     }
     
