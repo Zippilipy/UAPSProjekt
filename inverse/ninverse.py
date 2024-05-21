@@ -1,8 +1,9 @@
 '''Calculates the inverse of an arbitrary matrix, without using numpy'''
+import sys
 import random
 import time
 MAX = 100
-MIN = 0
+MIN = 1
 
 def create_matrix(dimension):
     '''Generates a random square matrix with certain dimensions'''
@@ -10,7 +11,7 @@ def create_matrix(dimension):
     rows = 0
     while rows < dimension:
         row = []
-        for i in range(0, dimension):
+        for _ in range(0, dimension):
             row.append(random.randint(MIN,MAX))
         matrix.append(row)
         rows += 1
@@ -25,58 +26,59 @@ def invert_matrix(a):
         pivot = a[i][i]
 	#divides everything in the row
         for j in range(n):
-            a[i][j] /= pivot
-            identity[i][j] /= pivot
+            if pivot != 0:
+                a[i][j] = a[i][j]/ pivot
+                identity[i][j] = identity[i][j]/ pivot
         for k in range(n):
             if k != i:
                 factor = a[k][i]
                 for j in range(n):
-                    a[k][j] -= factor * a[i][j]
-                    identity[k][j] -= factor * identity[i][j]
+                    a[k][j] = a[k][j] -  factor * a[i][j]
+                    identity[k][j] = identity[k][j] - factor * identity[i][j]
     return identity
 
-def submatrix(matrix, row, columns):
-    # creates a deepcopy of the matrix
-    copy = matrix[:]
-    # removes all values in a column
-    for i in range(len(matrix)):
-        if len(copy[i])-1 > i:
-            copy[i].pop(columns)
-    # removes an entire row
-    copy.pop(row)
-    return copy
-
 def determinant(matrix):
-	# gets the dimensions of the array
-    rows = len(matrix)
-    cols = len(matrix[0])
-    det = 0
+    ''' Calculates the determinant of a matrix'''
+    if len(matrix) != len(matrix[0]):
+        raise ValueError("Matrix must be square")
 
-	# 1 x 1 matrix
-    if rows == 1 and cols == 1:
-        return matrix[0][0]
+    det = 1
+    n = len(matrix)
 
-	# 2 x 2 matrix
-    if rows == 2 and cols == 2:
-        return matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1]
-    # Does a laplace expansion, recursive
+    for i in range(n):
+        if matrix[i][i] == 0:
+            # Find a row to swap with
+            for j in range(i + 1, n):
+                if matrix[j][i] != 0:
+                    matrix[i], matrix[j] = matrix[j], matrix[i]
+                    det = -det
+                    break
+            else:
+                return 0
 
-    for column in range(cols):
-        sub_matrix = submatrix(matrix, 0, cols)
-        sign = (-1) ** column
-        det = det + sign * matrix[0][column] * determinant(sub_matrix)
+        for j in range(i + 1, n):
+            factor = matrix[j][i] / matrix[i][i]
+            for k in range(i, n):
+                matrix[j][k] -= factor * matrix[i][k]
+
+    for i in range(n):
+        det *= matrix[i][i]
+
     return det
 
-start_time = time.time()
+times = int(sys.argv[1])
+B = 0
+while B < times:
+    start_time = time.time_ns()
 
-Determinant = 0
+    DETERMINANT = 0
 
-while Determinant == 1:
-    new_matrix = create_matrix(100)
-    Determinant = determinant(new_matrix)
+    while DETERMINANT == 0:
+        new_matrix = create_matrix(100)
+        DETERMINANT = determinant(new_matrix)
 
-	
-invert_matrix(create_matrix(100))
-end_time = time.time()
-elapsed_time = end_time - start_time
-print(elapsed_time)
+    invert_matrix(create_matrix(100))
+    end_time = time.time_ns()
+    elapsed_time = end_time - start_time
+    print(elapsed_time)
+    B = B + 1

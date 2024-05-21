@@ -11,7 +11,6 @@ def format_input(input_file):
                 values.append(value)
     return tuple(values)
 
-# Example usage
 input_file = "simulations/result2/pythonsimulations.txt"
 formatted_values = format_input(input_file)
 print(formatted_values)

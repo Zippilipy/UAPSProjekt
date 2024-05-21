@@ -2,30 +2,62 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+# define N 100
 
-int main() {
-
-        clock_t start, end;
-        double cpu_time_used;
-
-        start = clock(); 
-
-        int DIMENSION = 100;
-
-        // Creates the new matrix
-        double matrix[DIMENSION][DIMENSION];
-        int row, column;
-        srand(time(NULL));
-        for(row = 0; row < DIMENSION; row++){
-                for(column = 0; column < DIMENSION; column++){
-                        matrix[row][column] = rand();    
-                }
-        }
+// Calculates the determinant of a matrix using gaussian elimination
+float determinant(float matrix[N][N]) {
+    int i, j, k;
+    float det = 1;
     
-        // Creates an identity matrix
-        int identity[DIMENSION][DIMENSION];
-        for(row = 0; row < DIMENSION; row++){
-                for(column = 0; column < DIMENSION; column++){
+    for (i = 0; i < N; i++) {
+        for (j = i + 1; j < N; j++) {
+            float factor = matrix[j][i] / matrix[i][i];
+            for (k = i; k < N; k++) {
+                matrix[j][k] -= factor * matrix[i][k];
+            }
+        }
+    }
+
+for (i = 0; i < N; i++) {
+	 // Pivoting: Swap rows if the diagonal element is zero
+        if (matrix[i][i] == 0) {
+            for (j = i + 1; j < N; j++) {
+                if (matrix[j][i] != 0) {
+                    for (k = 0; k < N; k++) {
+                        float temp = matrix[i][k];
+                        matrix[i][k] = matrix[j][k];
+                        matrix[j][k] = temp;
+                    }
+                    break;
+                }
+            }
+        }
+}
+
+	
+    
+    for (i = 0; i < N; i++) {
+		if (matrix[i][i] == 0) {
+            return 0;
+        }
+        det *= matrix[i][i];
+    }
+    
+    return det;
+}
+
+
+int main(int argc, char *argv[]) {
+		int times = atoi(argv[1]);
+		int z;
+		for(z = 0; z < times; z++){
+		int det = 0, row, column;
+        float matrix[N][N];
+        int identity[N][N];
+
+		// creates the identity matrix	
+        for(row = 0; row < N; row++){
+                for(column = 0; column < N; column++){
                         if(column == row){
                                 identity[row][column] = 1;
                         }else{
@@ -33,26 +65,43 @@ int main() {
                         }
                 }
         }
+		
+		struct timespec t_one, t_two;
+        clock_gettime(CLOCK_MONOTONIC_RAW, &t_one);
 
-        // Inverts the matrix
+		// creates a random matrix until an invertible is created
+		while(det == 0){
+        	int row, column;
+        	srand(time(NULL));
+        	for(row = 0; row < N; row++){
+               	for(column = 0; column < N; column++){
+                    matrix[row][column] = rand()%100;    
+            	}
+        	}
+			det = determinant(matrix); 
+		}
+
+		// inverts the matrix
         int i,j,k;
-        for(i = 0; i < DIMENSION; i++){
+        for(i = 0; i < N; i++){
                 double pivot = matrix[i][i];
-                for(j = 0; j < DIMENSION; j++){
+                for(j = 0; j < N; j++){
                         matrix[i][j] = matrix[i][j]/pivot;
                         identity[i][j] = identity[i][j]/pivot;
                 }    
-                for(k = 0; k < DIMENSION; k++){
+                for(k = 0; k < N; k++){
                         if(k!=i){
                                 int factor = matrix[k][i];
-                                for(j = 0; j < DIMENSION; j++){
+                                for(j = 0; j < N; j++){
                                         matrix[k][j] = matrix[k][j] - factor * matrix[i][j];
                                         identity[k][j] = identity[k][j] - factor * identity[i][j];
                                 }
                         }
                 }
 		}
+    	clock_gettime(CLOCK_MONOTONIC_RAW, &t_two);
+        long elapsed_ns = (t_two.tv_sec - t_one.tv_sec) * 1000000000L + (t_two.tv_nsec - t_one.tv_nsec);
+        printf("%ld\n", elapsed_ns);
+		}
 		return 0;
 }
-
-
